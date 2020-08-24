@@ -27,12 +27,74 @@
 */
 
 
-var userInfo={
-    userId: '',
-    token:'',
-}
+// var userInfo={
+//     userId: '',
+//     token:'',
+// }
 
 
 $(function () {
-
+    const data={
+        color:16777215,
+        fontsize:25,
+        mode:1,
+        msg:'(=・ω・=)',
+        //应该是时间戳
+        rnd:myApi.methods.datetime(new Date()),
+        roomid:4345131,
+        bubble:0,
+        csrf_token: 'a499d8f497180d0cb02d5adc9fc2364f',
+        csrf: 'a499d8f497180d0cb02d5adc9fc2364f'
+    }
+    const url='https://api.live.bilibili.com/msg/send'
+    const method='POST'
+    myApi.xhr.ajax(url,method,data)
+    console.log(data)
 })
+
+let myApi={
+    data:{
+
+    },
+    methods:{
+        //获取当前时间戳
+        datetime (date) {
+            let result = new Date(date).getTime();
+            return parseInt(result/1000);
+        },
+    },
+    xhr:{
+    //    发送请求需传3个参数url，type，data
+        ajax(url,method,data){
+            $.ajax({
+                url,
+                method,
+                data,
+                /* {
+                 coin_type: 'metal',
+                 master_uid: uid,
+                 platform: 'android',
+                 csrf_token: Info.token,
+                 csrf: Info.token
+             }*/
+
+                success: function (result) {
+                    // p.resolve(result);
+                    console.log(result)
+                },
+                error: function () {
+                    // p.reject();
+                    console.log("脚本失败")
+                },
+                crossDomain: true,
+                dataType: 'json',
+                xhrFields: {
+                    withCredentials: true,
+                },
+            });
+        }
+    }
+
+
+}
+
